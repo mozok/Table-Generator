@@ -1,0 +1,14 @@
+{
+  "name": "tablegenerator",
+  "version": "1.0.0",
+  "description": "Table generator for bicycle attributes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mozokevgen",
+  "license": "ISC",
+  "dependencies": {
+    "lit-html": "^1.1.2"
+  }
+}

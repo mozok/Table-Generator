@@ -1,0 +1,7 @@
+#result {
+	box-sizing: border-box;
+	resize: both;
+    overflow: hidden;
+    padding: 0;
+    outline: none;
+}
