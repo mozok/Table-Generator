@@ -71,12 +71,30 @@ function generateTableTemplate(tableModel) {
     return tableTemplate(rowTemplates);
 }
 
+function getRowMaxLength(tableModel) {
+    let maxLength = 0;
+    for (let row of tableModel) {
+        let rowLength = row.length;
+        if (rowLength > maxLength) {
+            maxLength = rowLength;
+        }
+    }
+    return maxLength;
+}
+
 generateButton.addEventListener('click', function (event) {
+    let maxRowLength = getRowMaxLength(tableModel);
+
     var generatedTable = `
 <table>
     ${tableModel.map((rowData, keyRow) => `<tr>
     ${rowData.map((tdData, keyTd) => `
-        ${keyTd === 0 ? `<th>${tdData.data}</th>` : `<td>${tdData.data}</td>`}
+        ${keyTd === 0 
+            ? `<th ${rowData.length === 1
+                ? `colspan="${maxRowLength}"`
+                : `style="text-align: left;"` 
+            }>${tdData.data}</th>` 
+            : `<td>${tdData.data}</td>`}
     `).join('')}
     </tr>`).join('\n')}
 <table>
