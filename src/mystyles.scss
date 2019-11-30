@@ -1,4 +1,6 @@
 @charset "utf-8";
+
+$footer-padding: 2rem 1.5rem 2rem;
 @import "~bulma/bulma";
 
 html {
@@ -16,6 +18,24 @@ body {
 
 .footer {
     flex-shrink: 0;
+}
+
+.modal-card-title {
+    margin-left: 5px;
+}
+
+.webpack-logo {
+    width: auto;
+    height: 35px;
+}
+
+.bd-footer-links p:not(:last-child) {
+    margin-bottom: 0.4em;
+}
+
+/* clicks inside the button will always be for the button itself */
+button > * {
+    pointer-events: none;
 }
 
 /* Preview table container styles */

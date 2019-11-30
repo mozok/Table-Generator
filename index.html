@@ -23,8 +23,18 @@
         <div class="container">
             <div class="field">
                 <div class="control buttons">
-                    <button id="generate_button" class="button is-primary">Generate</button>
-                    <button id="preview_button" class="button">Preview</button>
+                    <button id="generate_button" class="button is-primary">
+                        <span class="icon">
+                            <i class="fas fa-arrow-down"></i>
+                        </span>
+                        <span>Generate</span>
+                    </button>
+                    <button id="preview_button" class="button">
+                        <span class="icon">
+                            <i class="fas fa-columns"></i>
+                        </span>
+                        <span>Preview</span>
+                    </button>
                 </div>
             </div>
 
@@ -41,6 +51,9 @@
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
+                <span class="icon">
+                    <i class="fas fa-columns"></i>
+                </span>
                 <p class="modal-card-title">Table preview</p>
                 <button id="close_modal" class="delete" aria-label="close"></button>
             </header>
@@ -50,11 +63,22 @@
 
     <footer class="footer">
         <div class="content has-text-centered">
-            <p>
-                Simple &#60;table&#62; generator by @mozokevgen
-                Using <a href="https://lit-html.polymer-project.org/">lit-html</a> and <a
-                    href="https://bulma.io/">Bulma</a>
-            </p>
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-9">
+                        <p>Simple &#60;table&#62; generator by <a href="https://t.me/mozokevgen"><span class="icon"><i class="fab fa-telegram"></i></span><strong>@mozokevgen</strong></a></p>
+                        <p><a href=""><span class="icon><i class="far fa-copyright"></i></span>ISC</a></p>
+                    </div>
+                    <div class="column bd-footer-links">
+                        <p><strong>Using</strong></p>
+                        <p><a href="https://www.npmjs.com/"><span class="icon is-medium"><i class="fab fa-npm fa-2x"></i></span></a></p>
+                        <p><a href="https://lit-html.polymer-project.org/"><span class="icon"><i class="fas fa-fire-alt"></i></span>lit-html</a></p>
+                        <p><a href="https://bulma.io/"><img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: Free, open source, and modern CSS framework based on Flexbox" width="112" height="28"></a></p>
+                        <p><a href="https://fontawesome.com/"><i class="fab fa-font-awesome-flag"></i> Fontawesome</a></p>
+                        <p><a href="https://webpack.js.org/"><img class="webpack-logo" src="e0b5805d423a4ec9473ee315250968b2.svg" alt="webpack logo"></a></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
     <script type="module" src="dist/js/bundle.js"></script>

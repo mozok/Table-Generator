@@ -1,4 +1,8 @@
 import { html, render } from 'lit-html';
+import '@fortawesome/fontawesome-free/js/fontawesome'
+import '@fortawesome/fontawesome-free/js/solid'
+import '@fortawesome/fontawesome-free/js/regular'
+import '@fortawesome/fontawesome-free/js/brands'
 require('./mystyles.scss');
 
 var tableModel = [[{ data: '' }]];
@@ -24,8 +28,8 @@ var tableTemplate = (rowTemplates) => html`
 `;
 var buttonTemplate = (id) => html`
     <div class="buttons has-addons">
-        <button id=${id} @click=${addTdHandler} class="button is-success is-light">+</button>
-        <button id=${id} @click=${removeTdHandler} class="button is-danger is-light">-</button>
+        <button id=${id} @click=${addTdHandler} class="button is-success is-light">${faPlusTemplate}</button>
+        <button id=${id} @click=${removeTdHandler} class="button is-danger is-light">${faMinusTemplate}</button>
     </div>
 `;
 var inputTemplate = (id, data) => html`
@@ -49,9 +53,25 @@ var columnsTemplate = (tableModel) => html`
     `)}
     
     <div class="buttons has-addons">
-        <button id="add_row" @click=${addRowHandler} class="button is-success is-light">+</button>
-        <button id="remove_row" @click=${removeRowHandler} class="button is-danger is-light">-</button>
+        <button id="add_row" @click=${addRowHandler} class="button is-success is-light">
+            ${faPlusTemplate}
+        </button>
+        <button id="remove_row" @click=${removeRowHandler} class="button is-danger is-light">
+            ${faMinusTemplate}
+        </button>
     </div>
+`;
+
+let faPlusTemplate = html`
+    <span class="icon">
+        <i class="fas fa-plus"></i>
+    </span>
+`;
+
+let faMinusTemplate = html`
+    <span class="icon">
+        <i class="fas fa-minus"></i>
+    </span>
 `;
 
 // just for testing purpose
@@ -179,6 +199,7 @@ let heroTemplate = (data) => html`
     <div class="container">
       <h1 class="title">
         ${data.title}
+        <span class="icon"><i class="far fa-hand-spock"></i></span>  
       </h1>
       <h2 class="subtitle">
         ${data.body}
