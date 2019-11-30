@@ -8,6 +8,8 @@ var greetingsSelector = 'greetings';
 var tableSelector = 'table_container';
 var resultSelector = 'result';
 
+/* initial table generation templates */
+
 var tableTemplate = (rowTemplates) => html`
     <table class="table">
         <tbody>
@@ -20,18 +22,38 @@ var tableTemplate = (rowTemplates) => html`
     </div>
 `;
 var buttonTemplate = (id) => html`
-    <td><div class="buttons has-addons">
+    <div class="buttons has-addons">
         <button id=${id} @click=${addTdHandler} class="button is-success is-light">+</button>
         <button id=${id} @click=${removeTdHandler} class="button is-danger is-light">-</button>
-    </div></td>
+    </div>
 `;
 var inputTemplate = (id, data) => html`
     <td><input id=${id} @change=${inputChangeHandler} type="text" value=${data.data} class="input"></td>
 `;
 var rowTemplate = (tdElements, buttonTemplate) => html`
-    <tr>${tdElements}${buttonTemplate}</tr>
+    <tr>${tdElements}<td>${buttonTemplate}</td></tr>
 `;
 
+/* table generation as columns templates */
+
+var columnsTemplate = (tableModel) => html`
+    ${tableModel.map((rowData, keyRow) => html`
+        <div class="columns">
+            ${rowData.map((elemData, elemKey) => html`
+                <div class="column ${rowData.length === 1 ? "is-two-thirds": ""}">
+                    <input id=${keyRow + '_' + elemKey} @change=${inputChangeHandler} type="text" value=${elemData.data} class="input">
+                </div>
+            `)}<div class="column">${buttonTemplate('row_' + keyRow)}</div>
+        </div>
+    `)}
+    
+    <div class="buttons has-addons">
+        <button id="add_row" @click=${addRowHandler} class="button is-success is-light">+</button>
+        <button id="remove_row" @click=${removeRowHandler} class="button is-danger is-light">-</button>
+    </div>
+`;
+
+// just for testing purpose
 function generateTestTableModel() {
     return [
         [{ data: 'test1' }],
@@ -39,6 +61,8 @@ function generateTestTableModel() {
         [{ data: 'test4' }, { data: 'test5' }]
     ]
 }
+
+/* event hendlers for table generation */
 
 function addRowHandler(event) {
     tableModel.push([{ data: '' }]);
@@ -67,6 +91,10 @@ function inputChangeHandler(event) {
     drawTable(tableModel, tableSelector);
 }
 
+/**
+ * Generate template for tableModel
+ * @param {array} tableModel 
+ */
 function generateTableTemplate(tableModel) {
     const rowTemplates = []
     for (let [keyRow, rowData] of tableModel.entries()) {
@@ -91,6 +119,9 @@ function getRowMaxLength(tableModel) {
     return maxLength;
 }
 
+/**
+ * Generate result table string, fill textarea and modal body
+ */
 generateButton.addEventListener('click', function (event) {
     let maxRowLength = getRowMaxLength(tableModel);
 
@@ -99,11 +130,11 @@ generateButton.addEventListener('click', function (event) {
 <tbody>
     ${tableModel.map((rowData, keyRow) => `<tr>
     ${rowData.map((tdData, keyTd) => `
-        ${keyTd === 0 
+        ${keyTd === 0
             ? `<th ${rowData.length === 1
                 ? `colspan="${maxRowLength}"`
-                : `style="text-align: left;"` 
-            }>${tdData.data}</th>` 
+                : `style="text-align: left;"`
+            }>${tdData.data}</th>`
             : `<td>${tdData.data}</td>`}
     `).join('')}
     </tr>`).join('\n')}
@@ -119,6 +150,7 @@ generateButton.addEventListener('click', function (event) {
     document.querySelector('#preview_body').innerHTML = generatedTable;
 });
 
+/* Modal actions */
 previewButton.addEventListener('click', function (event) {
     document.querySelector('.modal').classList.add('is-active');
 });
@@ -127,12 +159,19 @@ closeModalButton.addEventListener('click', function (event) {
     document.querySelector('.modal').classList.remove('is-active');
 });
 
+/**
+ * Generate and draw table constructor from table model
+ * @param {array} tableModel 
+ * @param {string} tableSelector 
+ */
 var drawTable = (tableModel, tableSelector) => {
-    const resultTable = generateTableTemplate(tableModel);
+    // const resultTable = generateTableTemplate(tableModel);
+    const resultTable = columnsTemplate(tableModel);
     render(resultTable, document.querySelector('#' + tableSelector));
 }
 drawTable(tableModel, tableSelector);
 
+/* Draw Hero */
 let heroTemplate = (data) => html`
   <section class="hero is-primary">
   <div class="hero-body">
