@@ -1,11 +1,11 @@
 import { html, render } from 'lit-html';
 
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faMinus, faArrowDown, faColumns, faFireAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faHandSpock, faCopyright } from '@fortawesome/free-regular-svg-icons'
 import { faTelegram, faGithub, faNpm, faFontAwesomeFlag } from '@fortawesome/free-brands-svg-icons'
 
-library.add(faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faHandSpock, faCopyright, faTelegram, faGithub, faNpm, faFontAwesomeFlag);
+library.add(faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faTimes, faHandSpock, faCopyright, faTelegram, faGithub, faNpm, faFontAwesomeFlag);
 dom.i2svg();
 dom.watch();
 
@@ -36,6 +36,7 @@ var buttonTemplate = (id) => html`
     <div class="buttons has-addons">
         <button id=${id} @click=${addTdHandler} class="button is-success is-light">${faPlusTemplate}</button>
         <button id=${id} @click=${removeTdHandler} class="button is-danger is-light">${faMinusTemplate}</button>
+        <button id="${id}" @click=${removeMiddleRowHandler} class="button is-danger">${faTimesTemplate}</button>
     </div>
 `;
 var inputTemplate = (id, data) => html`
@@ -52,7 +53,7 @@ var columnsTemplate = (tableModel) => html`
         <div class="columns is-mobile">
             ${rowData.map((elemData, elemKey) => html`
                 <div class="column ${rowData.length === 1 ? "is-two-thirds": ""}">
-                    <input id=${keyRow + '_' + elemKey} @change=${inputChangeHandler} type="text" value=${elemData.data} class="input">
+                    <input id=${keyRow + '_' + elemKey} @change=${inputChangeHandler} type="text" .value=${elemData.data} class="input">
                 </div>
             `)}<div class="column">${buttonTemplate('row_' + keyRow)}</div>
         </div>
@@ -80,6 +81,12 @@ let faMinusTemplate = html`
     </span>
 `;
 
+let faTimesTemplate = html`
+    <span class="icon">
+        <i class="fas fa-times"></i>
+    </span>
+`;
+
 // just for testing purpose
 function generateTestTableModel() {
     return [
@@ -95,8 +102,15 @@ function addRowHandler(event) {
     tableModel.push([{ data: '' }]);
     drawTable(tableModel, tableSelector);
 }
+
 function removeRowHandler(event) {
     tableModel.pop();
+    drawTable(tableModel, tableSelector);
+}
+
+function removeMiddleRowHandler(event) {
+    let [rowStr, id] = event.target.id.split('_');
+    tableModel.splice(id, 1);
     drawTable(tableModel, tableSelector);
 }
 
