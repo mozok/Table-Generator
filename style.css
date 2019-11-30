@@ -22,3 +22,48 @@ body {
     padding: 0;
     outline: none;
 }
+
+/* Preview table container styles */
+
+#preview_body table {
+    display: table;
+    max-width: 100%;
+    background: #fff7f0;
+    margin-bottom: 20px;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#preview_body table tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+#preview_body table tbody tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+#preview_body table tbody tr th {
+    display: table-cell;
+    border: 1px solid #f95900;
+    color: #7a7a7a;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    text-transform: uppercase;
+}
+
+#preview_body table tbody tr td {
+    display: table-cell;
+    vertical-align: inherit;
+    border: 1px solid #f95900;
+    padding: 10px;
+}

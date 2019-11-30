@@ -2,13 +2,17 @@ import { html, render } from './node_modules/lit-html/lit-html.js';
 
 var tableModel = [[{ data: '' }]];
 var generateButton = document.querySelector('#generate_button');
+var previewButton = document.querySelector('#preview_button');
+var closeModalButton = document.querySelector('#close_modal');
 var greetingsSelector = 'greetings';
 var tableSelector = 'table_container';
 var resultSelector = 'result';
 
 var tableTemplate = (rowTemplates) => html`
     <table class="table">
-        ${rowTemplates}
+        <tbody>
+            ${rowTemplates}
+        </tbody>
     </table>
     <div class="buttons has-addons">
         <button id="add_row" @click=${addRowHandler} class="button is-success is-light">+</button>
@@ -92,6 +96,7 @@ generateButton.addEventListener('click', function (event) {
 
     var generatedTable = `
 <table>
+<tbody>
     ${tableModel.map((rowData, keyRow) => `<tr>
     ${rowData.map((tdData, keyTd) => `
         ${keyTd === 0 
@@ -102,6 +107,7 @@ generateButton.addEventListener('click', function (event) {
             : `<td>${tdData.data}</td>`}
     `).join('')}
     </tr>`).join('\n')}
+</tbody>
 <table>
 `;
 
@@ -109,6 +115,16 @@ generateButton.addEventListener('click', function (event) {
     textareaElement.value = generatedTable;
     textareaElement.style.height = 'auto';
     textareaElement.style.height = textareaElement.scrollHeight + 'px';
+
+    document.querySelector('#preview_body').innerHTML = generatedTable;
+});
+
+previewButton.addEventListener('click', function (event) {
+    document.querySelector('.modal').classList.add('is-active');
+});
+
+closeModalButton.addEventListener('click', function (event) {
+    document.querySelector('.modal').classList.remove('is-active');
 });
 
 var drawTable = (tableModel, tableSelector) => {
