@@ -7,17 +7,22 @@ var tableSelector = 'table_container';
 var resultSelector = 'result';
 
 var tableTemplate = (rowTemplates) => html`
-    <table>
+    <table class="table">
         ${rowTemplates}
     </table>
-    <button id="add_row" @click=${addRowHandler}>+</button>
-    <button id="remove_row" @click=${removeRowHandler}>-</button>
+    <div class="buttons has-addons">
+        <button id="add_row" @click=${addRowHandler} class="button is-success is-light">+</button>
+        <button id="remove_row" @click=${removeRowHandler} class="button is-danger is-light">-</button>
+    </div>
 `;
 var buttonTemplate = (id) => html`
-    <td><button id=${id} @click=${addTdHandler}>+</button><button id=${id} @click=${removeTdHandler}>-</button></td>
+    <td><div class="buttons has-addons">
+        <button id=${id} @click=${addTdHandler} class="button is-success is-light">+</button>
+        <button id=${id} @click=${removeTdHandler} class="button is-danger is-light">-</button>
+    </div></td>
 `;
 var inputTemplate = (id, data) => html`
-    <td><input id=${id} @change=${inputChangeHandler} type="text" value=${data.data}></td>
+    <td><input id=${id} @change=${inputChangeHandler} type="text" value=${data.data} class="input"></td>
 `;
 var rowTemplate = (tdElements, buttonTemplate) => html`
     <tr>${tdElements}${buttonTemplate}</tr>
