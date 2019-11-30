@@ -1,4 +1,5 @@
-import { html, render } from './node_modules/lit-html/lit-html.js';
+import { html, render } from 'lit-html';
+require('./mystyles.scss');
 
 var tableModel = [[{ data: '' }]];
 var generateButton = document.querySelector('#generate_button');
@@ -38,7 +39,7 @@ var rowTemplate = (tdElements, buttonTemplate) => html`
 
 var columnsTemplate = (tableModel) => html`
     ${tableModel.map((rowData, keyRow) => html`
-        <div class="columns">
+        <div class="columns is-mobile">
             ${rowData.map((elemData, elemKey) => html`
                 <div class="column ${rowData.length === 1 ? "is-two-thirds": ""}">
                     <input id=${keyRow + '_' + elemKey} @change=${inputChangeHandler} type="text" value=${elemData.data} class="input">
