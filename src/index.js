@@ -1,8 +1,14 @@
 import { html, render } from 'lit-html';
-import '@fortawesome/fontawesome-free/js/fontawesome'
-import '@fortawesome/fontawesome-free/js/solid'
-import '@fortawesome/fontawesome-free/js/regular'
-import '@fortawesome/fontawesome-free/js/brands'
+
+import { library, dom } from '@fortawesome/fontawesome-svg-core';
+import { faPlus, faMinus, faArrowDown, faColumns, faFireAlt } from '@fortawesome/free-solid-svg-icons'
+import { faHandSpock, faCopyright } from '@fortawesome/free-regular-svg-icons'
+import { faTelegram, faGithub, faNpm, faFontAwesomeFlag } from '@fortawesome/free-brands-svg-icons'
+
+library.add(faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faHandSpock, faCopyright, faTelegram, faGithub, faNpm, faFontAwesomeFlag);
+dom.i2svg();
+dom.watch();
+
 require('./mystyles.scss');
 
 var tableModel = [[{ data: '' }]];
