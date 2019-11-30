@@ -112,10 +112,19 @@ var drawTable = (tableModel, tableSelector) => {
 }
 drawTable(tableModel, tableSelector);
 
+let heroTemplate = (data) => html`
+  <section class="hero is-primary">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        ${data.title}
+      </h1>
+      <h2 class="subtitle">
+        ${data.body}
+      </h2>
+    </div>
+  </div>
+</section>`;
 
-let myTemplate = (data) => html`
-  <h1>${data.title}</h1>
-  <p>${data.body}</p>`;
-
-const result = myTemplate({ title: 'Hello', body: 'This is simple <table> generator for bicycle attributes' });
-render(result, document.querySelector('#' + greetingsSelector));
+const heroResult = heroTemplate({ title: 'Hello', body: 'This is simple <table> generator for bicycle attributes' });
+render(heroResult, document.querySelector('#' + greetingsSelector));

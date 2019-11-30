@@ -1,25 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="./node_modules/bulma/css/bulma.min.css">
     <title>Table Generator</title>
 </head>
+
 <body>
-    <div id="greetings"></div>
+    <div class="content-wrapper">
+        <div id="greetings"></div>
 
-    <div id="table_container"></div>
+        <section class="section">
+            <div id="table_container" class="container"></div>
+        </section>
 
-    <div>
-        <button id="generate_button">Generate</button>
+        <section class="section">
+            <div class="container">
+                <button id="generate_button">Generate</button>
+            </div>
+
+            <div class="container">
+                <textarea data-autoresize rows="2" id="result"></textarea>
+            </div>
+        </section>
     </div>
 
-    <div>
-        <textarea data-autoresize rows="2" id="result"></textarea>
-    </div>
-
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                Simple &#60;table&#62; generator by @mozokevgen
+                Using <a href="https://lit-html.polymer-project.org/">lit-html</a> and <a
+                    href="https://bulma.io/">Bulma</a>
+            </p>
+        </div>
+    </footer>
     <script type="module" src="index.js"></script>
 </body>
+
 </html>
