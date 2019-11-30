@@ -72,11 +72,20 @@ function generateTableTemplate(tableModel) {
 }
 
 generateButton.addEventListener('click', function (event) {
+    var generatedTable = `
+<table>
+    ${tableModel.map((rowData, keyRow) => `<tr>
+    ${rowData.map((tdData, keyTd) => `
+        ${keyTd === 0 ? `<th>${tdData.data}</th>` : `<td>${tdData.data}</td>`}
+    `).join('')}
+    </tr>`).join('\n')}
+<table>
+`;
 
-    let textareaElement = document.querySelector('#'+ resultSelector);
-	textareaElement.value = generatedTable.outerHTML;
-	textareaElement.style.height = 'auto';
-	textareaElement.style.height = textareaElement.scrollHeight + 'px';
+    let textareaElement = document.querySelector('#' + resultSelector);
+    textareaElement.value = generatedTable;
+    textareaElement.style.height = 'auto';
+    textareaElement.style.height = textareaElement.scrollHeight + 'px';
 });
 
 var drawTable = (tableModel, tableSelector) => {
