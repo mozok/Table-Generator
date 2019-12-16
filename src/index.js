@@ -1,9 +1,10 @@
 import { html, render } from 'lit-html';
 
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { faHandSpock, faCopyright } from '@fortawesome/free-regular-svg-icons'
-import { faTelegram, faGithub, faNpm, faFontAwesomeFlag } from '@fortawesome/free-brands-svg-icons'
+import { faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faHandSpock, faCopyright } from '@fortawesome/free-regular-svg-icons';
+import { faTelegram, faGithub, faNpm, faFontAwesomeFlag } from '@fortawesome/free-brands-svg-icons';
+import docCookies from './cookies';
 
 library.add(faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faTimes, faHandSpock, faCopyright, faTelegram, faGithub, faNpm, faFontAwesomeFlag);
 dom.i2svg();
@@ -18,6 +19,12 @@ var closeModalButton = document.querySelector('#close_modal');
 var greetingsSelector = 'greetings';
 var tableSelector = 'table_container';
 var resultSelector = 'result';
+
+const STORAGE_KEY_TABLE_MODEL = 'table_model';
+var storageEnable = false;
+if (typeof(Storage) !== "undefined") {
+    storageEnable = true;
+}
 
 /* initial table generation templates */
 
@@ -100,36 +107,36 @@ function generateTestTableModel() {
 
 function addRowHandler(event) {
     tableModel.push([{ data: '' }]);
-    drawTable(tableModel, tableSelector);
+    processTable(tableModel);
 }
 
 function removeRowHandler(event) {
     tableModel.pop();
-    drawTable(tableModel, tableSelector);
+    processTable(tableModel, tableSelector);
 }
 
 function removeMiddleRowHandler(event) {
     let [rowStr, id] = event.target.id.split('_');
     tableModel.splice(id, 1);
-    drawTable(tableModel, tableSelector);
+    processTable(tableModel, tableSelector);
 }
 
 function addTdHandler(event) {
     let [rowStr, id] = event.target.id.split('_');
     tableModel[id].push({ data: '' });
-    drawTable(tableModel, tableSelector);
+    processTable(tableModel, tableSelector);
 }
 
 function removeTdHandler(event) {
     let [rowStr, id] = event.target.id.split('_');
     tableModel[id].pop();
-    drawTable(tableModel, tableSelector);
+    processTable(tableModel, tableSelector);
 }
 
 function inputChangeHandler(event) {
     let [row, td] = event.target.id.split('_');
     tableModel[row][td].data = event.target.value;
-    drawTable(tableModel, tableSelector);
+    processTable(tableModel, tableSelector);
 }
 
 /**
@@ -210,6 +217,40 @@ var drawTable = (tableModel, tableSelector) => {
     const resultTable = columnsTemplate(tableModel);
     render(resultTable, document.querySelector('#' + tableSelector));
 }
+
+var processTable = (tableModel) => {
+    saveTableModel(tableModel);
+    drawTable(tableModel, tableSelector);
+}
+
+function loadFromStorage () {
+    let result = [[{ data: '' }]];
+    
+    if (storageEnable && window.localStorage.getItem(STORAGE_KEY_TABLE_MODEL)) {
+        result = JSON.parse(window.localStorage.getItem(STORAGE_KEY_TABLE_MODEL));
+    } else if (docCookies.hasItem(STORAGE_KEY_TABLE_MODEL)) {
+        result = JSON.parse(docCookies.getItem(STORAGE_KEY_TABLE_MODEL));
+    }
+
+    return result; 
+}
+
+function saveToStorage (key, value) {
+    value = JSON.stringify(value);
+    
+    if (storageEnable) {
+        window.localStorage.setItem(key, value);
+    } else {
+        docCookies.setItem(key, value);
+    }
+}
+
+function saveTableModel (tableModel) {
+    saveToStorage(STORAGE_KEY_TABLE_MODEL, tableModel);
+}
+
+tableModel = loadFromStorage();
+
 drawTable(tableModel, tableSelector);
 
 /* Draw Hero */
