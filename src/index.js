@@ -1,12 +1,12 @@
 import { html, render } from 'lit-html';
 
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faTimes, faRedoAlt } from '@fortawesome/free-solid-svg-icons';
 import { faHandSpock, faCopyright } from '@fortawesome/free-regular-svg-icons';
 import { faTelegram, faGithub, faNpm, faFontAwesomeFlag } from '@fortawesome/free-brands-svg-icons';
 import docCookies from './cookies';
 
-library.add(faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faTimes, faHandSpock, faCopyright, faTelegram, faGithub, faNpm, faFontAwesomeFlag);
+library.add(faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faTimes, faRedoAlt, faHandSpock, faCopyright, faTelegram, faGithub, faNpm, faFontAwesomeFlag);
 dom.i2svg();
 dom.watch();
 
@@ -73,6 +73,9 @@ var columnsTemplate = (tableModel) => html`
         <button id="remove_row" @click=${removeRowHandler} class="button is-danger is-light">
             ${faMinusTemplate}
         </button>
+        <button id="remove_all" @click=${removeAllHandler} class="button is-danger">
+            ${faRedoTemplate}
+        </button>
     </div>
 `;
 
@@ -94,6 +97,12 @@ let faTimesTemplate = html`
     </span>
 `;
 
+let faRedoTemplate = html`
+    <span class="icon">
+        <i class="fas fa-redo-alt"></i>
+    </span>
+`;
+
 // just for testing purpose
 function generateTestTableModel() {
     return [
@@ -112,6 +121,11 @@ function addRowHandler(event) {
 
 function removeRowHandler(event) {
     tableModel.pop();
+    processTable(tableModel, tableSelector);
+}
+
+function removeAllHandler(event) {
+    tableModel = [[{ data: '' }]];
     processTable(tableModel, tableSelector);
 }
 
@@ -237,7 +251,7 @@ function loadFromStorage () {
 
 function saveToStorage (key, value) {
     value = JSON.stringify(value);
-    
+
     if (storageEnable) {
         window.localStorage.setItem(key, value);
     } else {
