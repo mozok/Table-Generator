@@ -180,7 +180,7 @@ generateButton.addEventListener('click', function (event) {
     `).join('')}
     </tr>`).join('\n')}
 </tbody>
-<table>
+</table>
 `;
 
     let textareaElement = document.querySelector('#' + resultSelector);
