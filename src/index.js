@@ -41,9 +41,9 @@ var tableTemplate = (rowTemplates) => html`
 `;
 var buttonTemplate = (id) => html`
     <div class="buttons has-addons">
-        <button id=${id} @click=${addTdHandler} class="button is-success is-light">${faPlusTemplate}</button>
-        <button id=${id} @click=${removeTdHandler} class="button is-danger is-light">${faMinusTemplate}</button>
-        <button id="${id}" @click=${removeMiddleRowHandler} class="button is-danger">${faTimesTemplate}</button>
+        <button title="Add column" id=${id} @click=${addTdHandler} class="button is-success is-light">${faPlusTemplate}</button>
+        <button title="Remove column" id=${id} @click=${removeTdHandler} class="button is-danger is-light">${faMinusTemplate}</button>
+        <button title="Remove row" id="${id}" @click=${removeMiddleRowHandler} class="button is-danger">${faTimesTemplate}</button>
     </div>
 `;
 var inputTemplate = (id, data) => html`
@@ -67,13 +67,13 @@ var columnsTemplate = (tableModel) => html`
     `)}
     
     <div class="buttons has-addons">
-        <button id="add_row" @click=${addRowHandler} class="button is-success is-light">
+        <button title="Add row" id="add_row" @click=${addRowHandler} class="button is-success is-light">
             ${faPlusTemplate}
         </button>
-        <button id="remove_row" @click=${removeRowHandler} class="button is-danger is-light">
+        <button title="Remove last row" id="remove_row" @click=${removeRowHandler} class="button is-danger is-light">
             ${faMinusTemplate}
         </button>
-        <button id="remove_all" @click=${removeAllHandler} class="button is-danger">
+        <button title="Reset all table" id="remove_all" @click=${removeAllHandler} class="button is-danger">
             ${faRedoTemplate}
         </button>
     </div>
