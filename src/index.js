@@ -15,7 +15,11 @@ require('./mystyles.scss');
 var tableModel = [[{ data: '' }]];
 var generateButton = document.querySelector('#generate_button');
 var previewButton = document.querySelector('#preview_button');
-var closeModalButton = document.querySelector('#close_modal');
+var closeModalButton = document.querySelector('#close_preview_modal');
+var closeResetModalButton = document.querySelector('#cancel_reset_modal');
+var cancelReset = document.querySelector('#cancel_reset');
+var confirmResetButton = document.querySelector('#reset_table_button');
+
 var greetingsSelector = 'greetings';
 var tableSelector = 'table_container';
 var resultSelector = 'result';
@@ -125,8 +129,7 @@ function removeRowHandler(event) {
 }
 
 function removeAllHandler(event) {
-    tableModel = [[{ data: '' }]];
-    processTable(tableModel, tableSelector);
+    document.querySelector('#reset_modal').classList.add('is-active');
 }
 
 function removeMiddleRowHandler(event) {
@@ -214,11 +217,25 @@ generateButton.addEventListener('click', function (event) {
 
 /* Modal actions */
 previewButton.addEventListener('click', function (event) {
-    document.querySelector('.modal').classList.add('is-active');
+    document.querySelector('#preview_modal').classList.add('is-active');
 });
 
 closeModalButton.addEventListener('click', function (event) {
-    document.querySelector('.modal').classList.remove('is-active');
+    document.querySelector('#preview_modal').classList.remove('is-active');
+});
+
+closeResetModalButton.addEventListener('click', function (event) {
+    document.querySelector('#reset_modal').classList.remove('is-active');
+});
+
+cancelReset.addEventListener('click', function (event) {
+    document.querySelector('#reset_modal').classList.remove('is-active');
+});
+
+confirmResetButton.addEventListener('click', function (event) {
+    tableModel = [[{ data: '' }]];
+    processTable(tableModel, tableSelector);
+    document.querySelector('#reset_modal').classList.remove('is-active');
 });
 
 /**
