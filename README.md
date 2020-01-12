@@ -21,7 +21,7 @@ This is simple &#60;table&#62; generator for bicycle attributes
 
 `npm run watch`
 
-## Using:
+## Build With
 [NPM](https://www.npmjs.com/)
 
 [lit-html](https://lit-html.polymer-project.org/)
