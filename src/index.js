@@ -1,12 +1,12 @@
 import { html, render } from 'lit-html';
 
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faTimes, faRedoAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faTimes, faRedoAlt, faGripLines } from '@fortawesome/free-solid-svg-icons';
 import { faHandSpock, faCopyright } from '@fortawesome/free-regular-svg-icons';
 import { faTelegram, faGithub, faNpm, faFontAwesomeFlag } from '@fortawesome/free-brands-svg-icons';
 import docCookies from './cookies';
 
-library.add(faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faTimes, faRedoAlt, faHandSpock, faCopyright, faTelegram, faGithub, faNpm, faFontAwesomeFlag);
+library.add(faPlus, faMinus, faArrowDown, faColumns, faFireAlt, faTimes, faRedoAlt, faGripLines, faHandSpock, faCopyright, faTelegram, faGithub, faNpm, faFontAwesomeFlag);
 dom.i2svg();
 dom.watch();
 
@@ -48,6 +48,7 @@ var buttonTemplate = (id) => html`
         <button title="Add column" id=${id} @click=${addTdHandler} class="button is-success is-light">${faPlusTemplate}</button>
         <button title="Remove column" id=${id} @click=${removeTdHandler} class="button is-danger is-light">${faMinusTemplate}</button>
         <button title="Remove row" id="${id}" @click=${removeMiddleRowHandler} class="button is-danger">${faTimesTemplate}</button>
+        <button title="Add next line" id="${id}" @click=${addMiddleRowHandler} class="button is-success is-light">${faGripLinesTemplate}</button>
     </div>
 `;
 var inputTemplate = (id, data) => html`
@@ -101,6 +102,13 @@ let faTimesTemplate = html`
     </span>
 `;
 
+
+let faGripLinesTemplate = html`
+    <span class="icon">
+        </i><i class="fas fa-grip-lines"></i>
+    </span>
+`;
+
 let faRedoTemplate = html`
     <span class="icon">
         <i class="fas fa-redo-alt"></i>
@@ -135,6 +143,12 @@ function removeAllHandler(event) {
 function removeMiddleRowHandler(event) {
     let [rowStr, id] = event.target.id.split('_');
     tableModel.splice(id, 1);
+    processTable(tableModel, tableSelector);
+}
+
+function addMiddleRowHandler(event) {
+    let [rowStr, id] = event.target.id.split('_');
+    tableModel.splice(parseInt(id) + 1, 0, [{ data: '' }]);
     processTable(tableModel, tableSelector);
 }
 
