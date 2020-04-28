@@ -127,7 +127,7 @@ function generateTestTableModel() {
 /* event hendlers for table generation */
 
 function addRowHandler(event) {
-    tableModel.push([{ data: '' }]);
+    tableModel.push([{ data: '' }, { data: '' }]);
     processTable(tableModel);
 }
 
